@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="utf-8" />
+  <title>Paper Grammage</title>
+  <link rel="stylesheet" type="text/css"
+        href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+  <script type="text/javascript"
+          src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript"
+          th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+  <link rel="icon" th:href="@{/css/pagelg.png}" />
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}" />
+
+  <script
+          src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script
+          th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+
+  <script
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script
+          th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+  <link rel="stylesheet" type="text/css"
+        href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript"
+          th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}" />
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/blur.css}" />
+
+  <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link
+          href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
+          rel='stylesheet' type='text/css'>
+  <script type="text/javascript" charset="utf8"
+          src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+  <script>
+	$(document).ready(function() {
+		$('#table_id1').DataTable();
+		$('#table_id2').DataTable();
+	});
+</script>
+  <style>
+td {
+	text-align: left;
+	white-space: nowrap;
+}
+
+th {
+	white-space: nowrap;
+}
+
+select {
+	color: grey;
+}
+
+input {
+	color: whitesmoke;
+}
+
+.btn-link {
+	background: none !important;
+	border-style: hidden;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	cursor: pointer;
+}
+
+.btn-link:hover {
+	background: none !important;
+	border: 1px solid blue;
+	border-radius: 5px;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	color: #FFFFFF;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+	.row.content {
+		height: auto;
+	}
+}
+
+.active button {
+	color: white !important;
+}
+
+body {
+	margin: 20px !important;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row content">
+
+    <div class="col-sm-2 sidenav">
+      <h3 style="font-weight: bolder">
+        <span style="color: white;">Welcome</span> <br> <b
+              style="color: green;">[[${#request.userPrincipal.principal.fullName}]]</b>
+      </h3>
+      <ul>
+        <li><a class="btn btn-secondary form-control" th:href="@{/quotation}">Quotation page</a></li>
+        <li><div
+                sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+          <a class="btn btn-secondary form-control" th:href="@{/papersList}">Paper Type & Color List</a>
+          <ul>
+            <li>
+              <ul>
+                <li>
+                  <a class="btn btn-secondary" style="color: yellow;width:60%;"
+                     th:href="@{/displayppcats}">Category</a>
+                </li>
+                <li>
+                  <a class="btn btn-info" style="color: yellow;width:60%;"
+                     th:href="@{/displayppgrams}">Grammage</a>
+                </li>
+              </ul>
+            </li>
+            <li><a class="btn btn-danger" style="color: white;width:60%;"
+                   th:href="@{/addpaper}"><i class="fa fa-plus"
+                                             aria-hidden="true"></i> Add paper</a></li>
+          </ul>
+        </div></li>
+        <li><div>
+          <a class="btn btn-secondary form-control" th:href="@{/finishingProps}">Finishing Properties</a>
+        </div></li>
+        <li><div>
+          <a class="btn btn-secondary form-control" th:href="@{/draft_save}">Saved Quotes</a>
+        </div></li>
+        <li><div class="pending"
+                 sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+          <a class="btn btn-secondary form-control" th:href="@{/pending_drafts}">Quote Approval</a>
+          <span class="button__badge" th:text="${draftCount}"></span>
+        </div></li>
+        <li><div
+                sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+          <a class="btn btn-secondary form-control" th:href="@{/users}">Users List</a>
+        </div></li>
+        <li><div>
+          <a class="btn btn-secondary form-control" th:href="@{/userprofile}">Profile</a>
+        </div></li>
+        <li><div
+                sec:authorize="hasAnyAuthority('ADMIN')">
+          <a class="btn btn-secondary form-control" th:href="@{/add_user_to_my_company}">Add User To Company</a>
+        </div></li>
+        <li><div
+                sec:authorize="hasAnyAuthority('SUPER_ADMIN')">
+          <a class="btn btn-secondary form-control" th:href="@{/addcompany}">Add Company</a>
+        </div></li>
+        <li>
+          <form th:action="@{/logout}" method="post">
+            <input class="btn btn-danger form-control" type="submit"
+                   value="Sign Out" />
+          </form>
+        </li>
+      </ul>
+      <br>
+    </div>
+
+
+
+
+    <div class="col-sm-10 well" style="background: #2B3035;">
+
+
+      <table id="table_id2" class="display table table-dark table-hover">
+        <thead>
+        <tr>
+          <th>Category</th>
+          <th>Manage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="paperg : ${papergrams}">
+          <td th:text="${paperg.grammage}"></td>
+          <td>
+            <a th:href="@{/editordeletepapergrammage/{id}(id=${paperg.getId()})}"><i class="fa fa-bars" aria-hidden="true"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" th:src="@{/js/countpending.js}"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>List Finishing</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="icon" th:href="@{/css/pagelg.png}" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+
+<style>
+td {
+	text-align: left;
+	white-space: nowrap;
+}
+
+th {
+	white-space: nowrap;
+}
+
+select {
+	color: grey;
+}
+
+.tableWrapper {div .wrapper width:500px;
+	overflow: auto;
+}
+
+input {
+	color: whitesmoke;
+}
+
+.btn-link {
+	background: none !important;
+	border-style: hidden;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	cursor: pointer;
+}
+
+.btn-link:hover {
+	background: none !important;
+	border: 1px solid blue;
+	border-radius: 5px;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	color: #FFFFFF;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+	.row.content {
+		height: auto;
+	}
+}
+
+.active button {
+	color: white !important;
+}
+
+body {
+	margin: 20px !important;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$('#proptable').DataTable();
+	});
+</script>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row content">
+
+			<div class="col-sm-2 sidenav">
+				<h3 style="font-weight: bolder">
+					<span style="color: white;">Welcome</span> <br> <b
+						style="color: green;">[[${#request.userPrincipal.principal.fullName}]]</b><br>
+					<span style="color: grey;"
+						sec:authentication="principal.authorities">Roles</span>
+				</h3>
+				<form th:action="@{/logout}" method="post" th:hidden="true"
+					name="logoutForm">
+					<input type="submit" class="lgbtns" value="Sign Out" />
+				</form>
+				<ul>
+					<li><a class="btn btn-secondary form-control" th:href="@{/quotation}">Quotation page</a></li>
+					<li class="active"><div
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+							<a class="btn btn-secondary form-control" th:href="@{/papersList}">Paper & Color List</a>
+						</div></li>
+					<li><div>
+							<a class="btn btn-primary form-control" th:href="@{/finishingProps}">Finishing Properties</a>
+						</div></li>
+					<li><div>
+							<a class="btn btn-secondary form-control" th:href="@{/draft_save}">Saved Quotes</a>
+						</div></li>
+					<li><div class="pending"
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+							<a class="btn btn-secondary form-control" th:href="@{/pending_drafts}">Quote Approval</a>
+							<span class="button__badge" th:text="${draftCount}"></span>
+						</div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+							<a class="btn btn-secondary form-control" th:href="@{/users}">Users List</a>
+						</div></li>
+					<li><div>
+							<a class="btn btn-secondary form-control" th:href="@{/userprofile}">Profile</a>
+						</div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('ADMIN')">
+						<a class="btn btn-secondary form-control" th:href="@{/add_user_to_my_company}">Add User To Company</a>
+					</div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN')">
+						<a class="btn btn-secondary form-control" th:href="@{/addcompany}">Add Company</a>
+					</div></li>
+					<li>
+						<form th:action="@{/logout}" method="post">
+							<input class="btn btn-danger form-control" type="submit"
+								value="Sign Out" />
+						</form>
+					</li>
+				</ul>
+				<br>
+			</div>
+
+
+
+
+			<div class="col-sm-10 well" style="background: #2B3035;">
+				<div th:if="${finishingprops != null and !finishingprops.isEmpty()}">
+
+					<table id="proptable" class="table-dark table-hover table">
+						<thead>
+							<tr>
+								<th>-</th>
+								<th>-</th>
+								<th>-</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="props, index : ${finishingprops}">
+								<td th:text="${props.property}"></td>
+								<td style="color: yellow;" th:text="${formattedNumbers[index.index]}"></td>
+								<td th:text="${props.unit}"></td>
+								<td>
+									<div sec:authorize="hasAnyAuthority('ADMIN')">
+										<a th:href="@{/editprops/{id}(id=${props.getId()})}"><i
+											class="fa fa-pencil" aria-hidden="true"></i></a>
+									</div>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/js/countpending.js}"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>User Profile</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<link rel="icon" th:href="@{/css/pagelg.png}" />
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/btn.css}" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#table_id').DataTable();
+	});
+</script>
+<style>
+td {
+	text-align: left;
+}
+
+input {
+	color: whitesmoke;
+}
+
+body {
+	margin: 20px !important;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row content">
+			<div class="col-sm-2 sidenav">
+				<h3 style="font-weight: bolder">
+					<span style="color: white;">Welcome</span> <br> <b
+						style="color: green;">[[${#request.userPrincipal.principal.fullName}]]</b>
+					<br> <span style="color: grey;"
+						sec:authentication="principal.authorities">Roles</span>
+				</h3>
+				<form th:action="@{/logout}" method="post" th:hidden="true"
+					name="logoutForm">
+					<input type="submit" class="lgbtns" value="Sign Out" />
+				</form>
+				<ul>
+					<li><a class="btn btn-secondary form-control"
+						th:href="@{/quotation}">Quotation page</a></li>
+					<li class="active"><div
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+							<a class="btn btn-secondary form-control"
+								th:href="@{/papersList}">Paper & Color List</a>
+						</div></li>
+					<li><div>
+							<a class="btn btn-secondary form-control"
+								th:href="@{/finishingProps}">Finishing Properties</a>
+						</div></li>
+					<li><div>
+							<a class="btn btn-secondary form-control"
+								th:href="@{/draft_save}">Saved Quotes</a>
+						</div></li>
+					<li><div class="pending"
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+							<a class="btn btn-secondary form-control"
+								th:href="@{/pending_drafts}">Quote Approval</a> <span
+								class="button__badge" th:text="${draftCount}"></span>
+						</div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+							<a class="btn btn-secondary form-control" th:href="@{/users}">Users
+								List</a>
+						</div></li>
+					<li><div>
+							<a class="btn btn-primary form-control" th:href="@{/userprofile}">Profile</a>
+						</div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('ADMIN')">
+						<a class="btn btn-secondary form-control" th:href="@{/add_user_to_my_company}">Add User To Company</a>
+					</div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN')">
+						<a class="btn btn-secondary form-control" th:href="@{/addcompany}">Add Company</a>
+					</div></li>
+					<li>
+						<form th:action="@{/logout}" method="post">
+							<input class="btn btn-danger form-control" type="submit"
+								value="Sign Out" />
+						</form>
+					</li>
+				</ul>
+				<br>
+			</div>
+
+			<div class="col-sm-10 well" style="background: #2B3035;">
+				<dl>
+					<dt>Username:</dt>
+					<dd th:text="${userpendingdrafts.getUsername}"></dd>
+					<dt>First Name:</dt>
+					<dd th:text="${userpendingdrafts.getFirstName}"></dd>
+					<dt>Last Name:</dt>
+					<dd th:text="${userpendingdrafts.getLastName}"></dd>
+					<dt>Email:</dt>
+					<dd th:text="${userpendingdrafts.getEmail}"></dd>
+					<dt>Phone:</dt>
+					<dd th:text="${userpendingdrafts.getPhone}"></dd>
+				</dl>
+			</div>
+
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/js/countpending.js}"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script>
+		$(document).ready(function() {
+			$("#passwordFormSubmit").click(function(e) {
+				e.preventDefault(); // Prevent the form from being submitted the traditional way
+				var form = $("form");
+				$.ajax({
+					type : "POST",
+					url : "/changepw",
+					data : form.serialize(), // serialize the form data
+					success : function(data) {
+						Swal.fire({
+							title : 'Password Updated!',
+							text : 'Click to continue',
+							icon : 'success',
+							confirmButtonText : 'Okay'
+						})
+					},
+					error : function(data) {
+						Swal.fire({
+							title : 'Failed to update password!',
+							text : 'Click to continue',
+							icon : 'error',
+							confirmButtonText : 'Okay'
+						})
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

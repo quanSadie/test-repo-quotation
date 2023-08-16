@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8" />
+<title>Edit Paper Type</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<link rel="icon" th:href="@{/css/pagelg.png}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/btn.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<style>
+td {
+	text-align: left;
+	white-space: nowrap;
+}
+
+th {
+	white-space: nowrap;
+}
+
+select {
+	color: grey;
+}
+
+.tableWrapper {div .wrapper width:500px;
+	overflow: auto;
+}
+
+input {
+	color: whitesmoke;
+}
+
+@media screen and (max-width: 767px) {
+	.row.content {
+		height: auto;
+	}
+}
+
+.active button {
+	color: white !important;
+}
+
+body {
+	margin: 20px !important;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row content">
+
+			<div class="col-sm-2 sidenav">
+				<h3 style="font-weight: bolder">
+					<span style="color: white;">Welcome</span> <br> <b
+						style="color: green;">[[${#request.userPrincipal.principal.fullName}]]</b>
+				</h3>
+				<form th:action="@{/logout}" method="post" th:hidden="true"
+					name="logoutForm">
+					<input type="submit" class="lgbtns" value="Sign Out" />
+				</form>
+				<ul>
+                    <li><a class="btn btn-secondary form-control" th:href="@{/quotation}">Quotation page</a></li>
+                    <li class="active"><div
+                            sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+                            <a class="btn btn-secondary form-control" th:href="@{/papersList}">Paper & Color List</a>
+                        </div></li>
+                    <li><div>
+                            <a class="btn btn-secondary form-control" th:href="@{/finishingProps}">Finishing Properties</a>
+                        </div></li>
+                    <li><div>
+                            <a class="btn btn-secondary form-control" th:href="@{/draft_save}">Saved Quotes</a>
+                        </div></li>
+                    <li><div class="pending"
+                            sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+                            <a class="btn btn-secondary form-control" th:href="@{/pending_drafts}">Quote Approval</a>
+                           <span class="button__badge" th:text="${draftCount}"></span>
+                        </div></li>
+                    <li><div
+                            sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')">
+                            <a class="btn btn-secondary form-control" th:href="@{/users}">Users List</a>
+                        </div></li>
+                    <li><div>
+                            <a class="btn btn-secondary form-control" th:href="@{/userprofile}">Profile</a>
+                        </div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('ADMIN')">
+						<a class="btn btn-secondary form-control" th:href="@{/add_user_to_my_company}">Add User To Company</a>
+					</div></li>
+					<li><div
+							sec:authorize="hasAnyAuthority('SUPER_ADMIN')">
+						<a class="btn btn-secondary form-control" th:href="@{/addcompany}">Add Company</a>
+					</div></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn btn-danger form-control" type="submit"
+                                value="Sign Out" />
+                        </form>
+                    </li>
+                </ul>
+				<br>
+			</div>
+
+
+
+
+			<div class="col-sm-10 well" style="background: #2B3035;">
+				<form action="#" th:action="@{/savepaper}" th:object="${paper}"
+					method="post">
+					<input type="hidden" th:field="*{id}" readonly /> <input
+						type="hidden" th:field="*{pg_id}" />
+					<table class="display table-dark table-hover table">
+						<tr>
+							<td>Paper Type:</td>
+							<td><input class="form-control"
+								style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{type}" /></td>
+						</tr>
+						<tr>
+							<td>Price:</td>
+							<td><input class="form-control" id="inputprice"
+								style="background: none; font-size: 1.5rem; color: yellow;"
+								type="text" th:field="*{price}" /></td>
+						</tr>
+						<tr>
+							<td>Width:</td>
+							<td><input class="form-control" id="inputwidth"
+								style="background: none; font-size: 1.5rem; color: white; outline: none;"
+								type="text" th:field="*{width}" /></td>
+						</tr>
+						<tr>
+							<td>Length:</td>
+							<td><input class="form-control" id="inputlength"
+								style="background: none; font-size: 1.5rem; color: white; outline: none;"
+								type="text" th:field="*{length}" /></td>
+						</tr>
+						<tr>
+							<td>Per Ream/Per Packet:</td>
+							<td><input class="form-control" id="inputperream"
+								style="background: none; font-size: 1.5rem; color: white; outline: none;"
+								type="text" th:field="*{perReamPackage}" /></td>
+						</tr>
+						<tr>
+							<td>Price Per Piece:</td>
+							<td><input class="form-control" id="priceperpiececal"
+								style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{pricePerCuts}" readonly/></td>
+						</tr>
+						<tr>
+							<td>Cut:</td>
+							<td><input class="form-control" id="inputcut"
+								style="background: none; font-size: 1.5rem; color: white; outline: none;"
+								type="text" th:field="*{cut}" /></td>
+						</tr>
+						<tr>
+							<td>Length After Cut:</td>
+							<td><input class="form-control" id="lengthaftercutcal"
+								style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{lengthAfterCut}" readonly/></td>
+						</tr>
+						<tr>
+							<td>Digital Width:</td>
+							<td><input class="form-control" id="digitalwidthcal"
+								style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{digitalWidth}" readonly/></td>
+						</tr>
+						<tr>
+							<td>Digital Length:</td>
+							<td><input class="form-control" id="digitallengthcal"
+								style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{digitalLength}" readonly/></td>
+						</tr>
+						<tr>
+							<td>Inches Width:</td>
+							<td><input class="form-control" id="incheswidthinput"
+								style="background: none; font-size: 1.5rem; color: white; outline: none;"
+								type="text" th:field="*{inchesWidth}" /></td>
+						</tr>
+						<tr>
+							<td>Inches Length:</td>
+							<td><input class="form-control"  id="incheslengthinput"
+								style="background: none; font-size: 1.5rem; color: white; outline: none;"
+								type="text" th:field="*{inchesLength}" /></td>
+						</tr>
+						<tr>
+							<td>Inches Length After Cut:</td>
+							<td><input class="form-control"  id="incheslengthaftercutcal"
+								style="background: none; font-size: 1.5rem; color: white;border: none; outline: none;"
+								type="text" th:field="*{inchesLengthAfterCut}" readonly/></td>
+						</tr>
+						<tr>
+							<td>Inches Square:</td>
+							<td><input class="form-control" id="inchessquarecal"
+									   style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{inchesSquare}" readonly/></td>
+						</tr>
+						<tr>
+							<td>Inches Square After Cut:</td>
+							<td><input class="form-control" id="inchessquareaftercutcal"
+								style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{inchesSquareAfterCut}" readonly/></td>
+						</tr>
+						<tr>
+							<td>A3 Square Inches:</td>
+							<td><input class="form-control" id="a3squareinchescal"
+								style="background: none; font-size: 1.5rem; color: white; border: none; outline: none;"
+								type="text" th:field="*{a3SquareInches}" readonly/></td>
+						</tr>
+						<tr>
+							<td>Is Card?:</td>
+							<td><input style="font-size:1.5rem;" type="radio" id="yes" name="yes" value="true" th:field="*{iscard}" required/>
+								<label for="yes">Yes</label> &nbsp;
+								<input style="font-size:1.5rem;" type="radio" id="no" name="no" value="false" th:field="*{iscard}" required/>
+								<label for="no">No</label> &nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>Max Up For Books:</td>
+							<td><input class="form-control"
+								style="background: none; font-size: 1.5rem; color: white;"
+								type="text" th:field="*{maxUpForBooks}" /></td>
+						</tr>
+						<tr>
+							<td>Enable:</td>
+							<td><input style="font-size:1.5rem;" type="radio" id="yes1" name="yes" value="true" th:field="*{isEnable}" required/>
+								<label for="yes1">Yes</label> &nbsp;
+								<input style="font-size:1.5rem;" type="radio" id="no1" name="no" value="false" th:field="*{isEnable}" required/>
+								<label for="no1">No</label> &nbsp;
+							</td>
+						</tr>
+					</table>
+					<button style="font-size: 1.5rem;" class="btn btn-primary"
+						type="submit">Save</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+    	var props = [[${props}]];
+	</script>
+	<script type="text/javascript" th:src="@{/js/countpending.js}"></script>
+	<script type="text/javascript" th:src="@{/js/new_paper_type.js}"></script>
+</body>
+</html>

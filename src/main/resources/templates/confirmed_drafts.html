@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Confirmed Success</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="icon" th:href="@{/css/pagelg.png}" />
+</head>
+<body>
+    <div class="container text-center">
+        <h3>You have confirmed a draft from <span th:text="${fullname}"></span></h3>
+        <div sec:authorize="hasAnyAuthority('SUPER_ADMIN','ADMIN')"><h4><a class="btn btn-primary" th:href="@{/pending_drafts}">Click here to go back</a></h4></div>
+        <div sec:authorize="hasAnyAuthority('ACCOUNT')"><h4><a class="btn btn-primary" th:href="@{/pending_drafts_account}">Click here to go back</a></h4></div>
+    </div>
+     
+</body>
+</html>

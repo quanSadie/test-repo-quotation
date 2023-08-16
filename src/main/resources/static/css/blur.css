@@ -1,0 +1,54 @@
+.tableWrapper1 {div .wrapper width:500px;
+	overflow: auto;
+}
+
+.tableWrapper {div .wrapper width:500px;
+	overflow: auto;
+}
+.tableWrapper {
+	gap: 20px;
+	-webkit-mask: linear-gradient(90deg, #0000, #000 0% 80%, #0000)
+}
+
+.sticky-col {
+	position: -webkit-sticky;
+	position: sticky;
+	background-color: white;
+}
+
+.first-col {
+	width: 100px;
+	min-width: 100px;
+	max-width: 100px;
+	left: 0px;
+}
+
+.second-col {
+	width: 150px;
+	min-width: 150px;
+	max-width: 250px;
+	left: 100px;
+}
+#table_id2_length {
+	position: -webkit-sticky;
+	position: sticky;
+	left: 0;
+}
+#table_id2_filter {
+    border-top: 1px solid white;
+    	color: white;
+        font-weight: 900;
+    	position: fixed;
+    	z-index: 999;
+    	right: 0;
+}
+
+#table_id2_filter input {
+	border: none;
+
+}
+
+#table_id2_filter input:focus {
+	border: none;
+	outline: none;
+}

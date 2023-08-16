@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Denied</title>
+  <link rel="icon" th:href="@{/css/pagelg.png}" />
+  <link rel="stylesheet" th:href="@{/css/errorpage.css}">
+</head>
+<body>
+
+<div class="cont_principal">
+  <div class="cont_error">
+
+    <h1 style="font-size: 5rem;">Oops! Something went wrong.</h1>
+    <p class="lead">We're sorry, but we couldn't find the page you requested.</p>
+    <p>If you think this is a server error, please contact the administrator.</p>
+    <a class="btn btn-primary btn-lg" href="/" role="button">Home</a>
+  </div>
+  <div class="cont_aura_1"></div>
+  <div class="cont_aura_2"></div>
+</div>
+<script>
+window.onload = function(){
+	document.querySelector('.cont_principal').className= "cont_principal cont_error_active";
+
+	}
+</script>
+</body>
+</html>

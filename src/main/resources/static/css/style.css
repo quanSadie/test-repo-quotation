@@ -1,0 +1,273 @@
+body::-webkit-scrollbar {
+    width: 1em;
+    height: 1em;
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 1em;
+    height: 1em; /* Added height for horizontal scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
+/* Style for horizontal scrollbar */
+.custom-scrollbar::-webkit-scrollbar-thumb:horizontal {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
+h3 {
+	font-weight: bolder;
+}
+
+caption {
+	caption-side: top;
+	font-weight: bolder;
+	font-size: 2rem;
+}
+
+.displaysize {
+	display: flex;
+}
+
+.displaysize input[type="text"] {
+	margin-right: 5px;
+}
+
+.finishingPropsHead {
+	max-width: 100%;
+	font-weight: bold;
+}
+
+.inputAmount {
+	width: 30%;
+}
+
+.noteTable {
+	width: 40%;
+}
+
+.frontTable tbody tr td {
+	font-size: 1.2rem;
+	font-weight: 550;
+}
+
+.backTable tbody tr td {
+	font-size: 1.2rem;
+	font-weight: 550;
+}
+
+
+.tableWrapper {div .wrapper width:500px;
+	overflow: auto;
+}
+.tableWrapper1 {div .wrapper width:500px;
+	height: 400px;
+	overflow-x: auto;
+}
+
+.CalculationTable td {
+	white-space: nowrap;
+}
+
+.suggestingPropsTable tr {
+	background: black;
+	color: white;
+}
+
+.suggestingPropsTable tr td {
+	font-weight: 700;
+	color: #90EE90;
+	font-style: italic;
+}
+
+.confirmBtns {
+	width: 100%;
+	height: 15vh;
+	background: #5dbea3;
+	color: whitesmoke;
+	font-size: 4rem;
+	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial,
+		sans-serif;
+	font-weight: bolder;
+}
+
+.confirmBtns:hover {
+	background: #dd7973;
+}
+
+.signoutBtn {
+	width: 100%;
+	height: 5vh;
+	background: #EA4531;
+	color: whitesmoke;
+	font-size: 2rem;
+	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial,
+		sans-serif;
+	font-weight: bolder;
+}
+
+.signoutBtn:hover {
+	background: #F78CA9;
+}
+
+.usersBtn {
+	width: 100%;
+	height: 5vh;
+	background: #008542;
+	color: whitesmoke;
+	font-size: 2rem;
+	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial,
+		sans-serif;
+	font-weight: bolder;
+}
+
+.usersBtn:hover {
+	background: rgb(40, 132, 172);
+}
+
+.lgbtns {
+	border: none;
+}
+
+#inputmarkup {
+	outline: 0;
+	border-width: 0 0 2px;
+	border-color: blue
+}
+
+input:focus {
+	border-color: green
+}
+
+.scrollBtn {
+	width: 100px;
+	position: fixed; /* Fixed/sticky position */
+	right: 30px; /* Place the button 30px from the right */
+	z-index: 99; /* Make sure it does not overlap */
+	border: none; /* Remove borders */
+	outline: none; /* Remove outline */
+	background-color: blueviolet; /* Set a background color */
+	color: white; /* Text color */
+	cursor: pointer; /* Add a mouse pointer on hover */
+	padding: 15px; /* Some padding */
+	border-radius: 100px; /* Rounded corners */
+	font-size: 11px; /* Increase font size */
+	font-weight: bold;
+}
+
+#ontopBtn {
+    background: #000000;
+    border: 1px solid whitesmoke;
+	bottom: 150px;
+}
+
+#scrollToFinishing {
+background: #000000;
+border: 1px solid whitesmoke;
+	bottom: 100px;
+}
+
+#calculateallprice {
+background: #000000;
+border: 1px solid whitesmoke;
+	bottom: 50px;
+}
+
+#ontopBtn:hover {
+	background: #999999; /* Add a dark-grey background on hover */
+}
+#scrollToFinishing:hover {
+	background: #999999; /* Add a dark-grey background on hover */
+}
+#calculateallprice:hover {
+	background: #999999; /* Add a dark-grey background on hover */
+}
+.pending {
+  position: relative; /* All 'absolute'ly positioned elements are relative to this one */
+}
+
+/* Make the badge float in the top right corner of the button */
+.button__badge {
+  background-color: #fa3e3e;
+  border-radius: 2px;
+  color: white;
+ 
+  padding: 1px 3px;
+  font-size: 10px;
+  
+  position: absolute; /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0;
+}
+.button_plus {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  cursor: pointer;
+  border: 2px solid #095776;
+
+  /* Mittig */
+}
+
+.button_plus:after {
+  content: '';
+  position: absolute;
+  transform: translate(-50%, -50%);
+  height: 4px;
+  width: 50%;
+  background: #095776;
+  top: 50%;
+  left: 50%;
+}
+
+.button_plus:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #095776;
+  height: 50%;
+  width: 4px;
+}
+
+.button_plus:hover:before,
+.button_plus:hover:after {
+  background: #fff;
+  transition: 0.2s;
+}
+
+.button_plus:hover {
+  background-color: #095776;
+  transition: 0.2s;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.dropdown-menu {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}

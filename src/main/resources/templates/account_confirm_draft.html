@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Pending Drafts</title>
+  <link rel="icon" th:href="@{/css/pagelg.png}" />
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+
+  <script type="text/javascript"
+          th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+  <link rel="stylesheet"
+        th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}" />
+
+  <script
+          th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+
+  <script
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script
+          th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+
+  <script type="text/javascript"
+          src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript"
+          th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}" />
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/blur.css}" />
+
+  <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link
+          href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
+          rel='stylesheet' type='text/css'>
+  <script type="text/javascript" charset="utf8"
+          src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+  <script>
+	$(document).ready(function() {
+		$('#table_id').DataTable();
+	});
+</script>
+  <style>
+td {
+	text-align: left;
+	white-space: nowrap;
+}
+
+th {
+	white-space: nowrap;
+}
+
+select {
+	color: grey;
+}
+
+input {
+	color: whitesmoke;
+}
+
+.btn-link {
+	background: none !important;
+	border-style: hidden;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	cursor: pointer;
+}
+
+.btn-link:hover {
+	background: none !important;
+	border: 1px solid blue;
+	border-radius: 5px;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	color: #FFFFFF;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+	.row.content {
+		height: auto;
+	}
+}
+
+.active button {
+	color: white !important;
+}
+
+body {
+	margin: 20px !important;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+</style>
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="row content">
+
+    <div class="col-sm-2 sidenav">
+      <h3 style="font-weight: bolder">
+        <span style="color: white;">Welcome</span> <br> <b
+              style="color: green;">[[${#request.userPrincipal.principal.fullName}]]</b><br>
+        <span style="color: grey;"
+              sec:authentication="principal.authorities">Roles</span>
+      </h3>
+      <form th:action="@{/logout}" method="post" th:hidden="true"
+            name="logoutForm">
+        <input type="submit" class="lgbtns" value="Sign Out" />
+      </form>
+      <ul>
+        <li>
+          <form th:action="@{/logout}" method="post">
+            <input class="btn btn-danger form-control" type="submit"
+                   value="Sign Out" />
+          </form>
+        </li>
+      </ul>
+
+      <br>
+    </div>
+
+
+
+
+    <div class="col-sm-10 well" style="background: #2B3035;">
+      <div class="tableWrapper1" id="tbl_2"
+           th:if="${pendingdrafts != null and !pendingdrafts.isEmpty()}">
+        <table id="table_id" class="display table table-dark table-hover">
+          <thead>
+          <tr>
+            <th>From User</th>
+            <th>Title</th>
+            <th>Delivery Date (yyyy-mm-dd)</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="element : ${pendingdrafts}">
+            <td><a th:href="@{/userpendingdraft/{id}(id=${element.value.getUser_id()})}" th:text="${element.key}"></a></td>
+            <td th:text="${element.value.title}"></td>
+            <td th:text="${element.value.deliverydate}"></td>
+            <td style="display: flex;">
+              <div sec:authorize="hasAnyAuthority('ACCOUNT')">
+                <a style="color: green;"
+                   th:href="@{/confirm_draft_account/{id}(id=${element.value.getId().toString()})}"><i
+                        class="fa fa-check" aria-hidden="true"></i> &nbsp; Approve</a>
+              </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div sec:authorize="hasAnyAuthority('ACCOUNT')">
+                <a
+                        th:href="@{/draft/export/quote/{id}(id=${element.value.getId()})}"><i
+                        class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;
+                  Download Quotation</a>
+              </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div sec:authorize="hasAnyAuthority('ACCOUNT')">
+                <a
+                        th:href="@{/draft/export/jobsheet/{id}(id=${element.value.getId()})}"><i
+                        class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;
+                  Download Job Sheet</a>
+              </div>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a style="color: red;" th:href="@{/deletedraft/{id}(id=${element.value.getId()})}"
+                 th:data-id="${element.value.getId()}"
+                 class="delete-link"><i class="fa fa-times" aria-hidden="true"></i> Reject</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+<script>
+$(document).on('click', '.delete-link', function (event) {
+    event.preventDefault();
+	var id = $(this).data('id');
+    var csrfToken = $("input[name='_csrf']").val();
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to re-approve this quote!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, reject it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Enter the reason for rejection',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Please enter a reason');
+                    }
+                    return reason;
+                },
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Please enter a reason';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var reason = result.value;
+                     if (reason.indexOf("/") !== -1) {
+                        reason = reason.replace(/\//g, "-");
+                    }
+                    $.ajax({
+                        type: 'GET',
+                        url: '/rejectdraft_account/' + id + '/' + reason,
+<!--                        data: JSON.stringify({  id: id, reason: reason, _csrf: csrfToken  }),-->
+                        contentType: 'application/json',
+                        success: function (data) {
+                            Swal.fire({
+                                title: 'Rejected!',
+                                text: 'The quote has been rejected.',
+                                icon: 'success'
+                            });
+                            // Reload the page
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while rejecting the quote.',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
+</script>
+
+<script type="text/javascript" th:src="@{/js/countpending.js}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

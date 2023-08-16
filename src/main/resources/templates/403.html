@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Denied</title>
+    
+    <link rel="stylesheet" th:href="@{/css/errorpage.css}">
+    <link rel="icon" th:href="@{/css/pagelg.png}" />
+</head>
+<body>
+     
+  <div class="cont_principal">
+<div class="cont_error">
+  
+<h1>Oops</h1>  
+  <p>You Do Not Have Permission To Access This Page</p>
+  <a th:href="@{/quotation}">Click to go back to the home page.</a>
+  </div>
+<div class="cont_aura_1"></div>
+<div class="cont_aura_2"></div>
+</div>
+<script>
+window.onload = function(){
+	document.querySelector('.cont_principal').className= "cont_principal cont_error_active";  
+	  
+	}
+</script>
+</body>
+</html>
