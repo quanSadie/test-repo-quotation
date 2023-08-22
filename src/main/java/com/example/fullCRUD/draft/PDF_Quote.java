@@ -127,7 +127,7 @@ public class PDF_Quote {
         table.addCell(cell);
         cell.setPhrase(new Phrase("\n" + draft.getQuantity_per_design(), font));
         table.addCell(cell);
-        cell.setPhrase(new Phrase("\n" + String.valueOf(draft.getFinal_selling_price() / Double.parseDouble(draft.getQuantity_per_design())), font));
+        cell.setPhrase(new Phrase("\n" + String.valueOf(Double.parseDouble(draft.getFinal_selling_price()) / Double.parseDouble(draft.getQuantity_per_design())), font));
         table.addCell(cell);
         cell.setPhrase(new Phrase("\n" + draft.getFinish_product_total_quantity(), font));
         table.addCell(cell);

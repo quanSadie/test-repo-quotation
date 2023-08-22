@@ -140,7 +140,7 @@ public class Draft {
 	private @Getter @Setter String paid;
 
 	@Column(name = "final_selling_price")
-	private @Getter @Setter Double final_selling_price;
+	private @Getter @Setter String final_selling_price;
 
 	// newly added column
 	@Column(name = "max_ups_per_paper")

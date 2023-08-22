@@ -113,9 +113,14 @@ public class DraftController {
         String headerValue = "attachment; filename=" + draft.getTitle() + "_" + userService.get(draft.getUser_id()).getFullName() + ".pdf";
         response.setHeader(headerKey, headerValue);
 
+        if (!draft.getQuantity_per_design().contains("&&&Quantity")) {
+            PDF_Quote exporter = new PDF_Quote(draft, paperTypeService, paperGrammageReposistory, paperService, userService);
+            exporter.export(response);
+        } else {
+            PDF_Quote_Multiple exporter = new PDF_Quote_Multiple(draft, paperTypeService, paperGrammageReposistory, paperService, userService);
+            exporter.export(response);
+        }
 
-        PDF_Quote exporter = new PDF_Quote(draft, paperTypeService, paperGrammageReposistory, paperService, userService);
-        exporter.export(response);
     }
 
     @RequestMapping(value = "/draft/export/jobsheet/{id}")

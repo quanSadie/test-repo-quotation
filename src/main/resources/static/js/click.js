@@ -31,7 +31,6 @@ $("#calculateallprice").click(function () {
 
 
 $( "#saveDraft" ).click(function() {
-    $("#hiddenfinalsellingprice").val($("#finalsellingprice").val());
     // set tilte here
     $("#hiddentitle").val($("#drafttitle").val());
     $("#hiddendate").val($("#deliveryDate").val());
@@ -209,13 +208,6 @@ $( "#saveDraft" ).click(function() {
                          						<td><h2 id="totalpricerounded${index_convert}"></h2></td>
                          						<td><h2>RM</h2></td>
                          					</tr>
-                         					<tr>
-                         						<td><h2 style="font-weight: bold;">Markup %</h2></td>
-                         						<td><input
-                         							style="width: 200px; height: 100%; font-size: 3rem; font-weight: 500;"
-                         							id="inputmarkup${index_convert}" type="text" class="form-control"></td>
-                         						<td><h2>%</h2></td>
-                         					</tr>
                          					<tr style="background: black; color: white;">
                          						<td><h2 style="text-decoration: underline; font-weight: bold;">Final Price</h2></td>
                          						<td><h2 style="color: #90EE90;" id="finalpricesum${index_convert}"></h2></td>
@@ -226,6 +218,11 @@ $( "#saveDraft" ).click(function() {
                          						<td><h2 style="color: #90EE90;" id="finalpricerounded${index_convert}"></h2></td>
                          						<td><h2 style="color: white;">RM</h2></td>
                          					</tr>
+                         					<tr style="background: black; color: white;">
+                                            	<td><h2 style="text-decoration: underline; font-weight: bold;color: white;">Final Selling Price</h2></td>
+                                            	<td><input style="border: none; background: gray; color: white; height: 60px; font-size: 2rem; font-weight: bold;" type="text" placeholder="Enter Price" class="form-control" id="finalsellingprice${index_convert}" required></td>
+                                            	<td><h2 style="color: white;">RM</h2></td>
+                                            </tr>
                          				</table>
                          			</div>
 
@@ -235,7 +232,7 @@ $( "#saveDraft" ).click(function() {
 
     // Initialize jQuery UI tabs
     $('#tabs').tabs({
-            show: { effect: 'fade', duration: 500 } // Add the fade effect with a duration of 300ms
+            show: { effect: 'fade', duration: 300 } // Add the fade effect with a duration of 300ms
         });
     tab_clickCount++;
   }

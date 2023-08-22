@@ -1252,8 +1252,12 @@ table tr td:last-child {
 			<!-- Price Table ends -->
 			<div class="row">
 				<div class="col-sm-4">
-					<label for="finalsellingprice" class="required" style="color: whitesmoke;">Final Selling Price</label>
-					<input type="text" placeholder="Enter Price" class="form-control" id="finalsellingprice" required>
+					<label class="required" style="color: whitesmoke;">Mark up</label>
+					<div id="markup-container" style="display: flex;">
+						<input style="width: 50px; margin: 1px;"
+								id="inputmarkup" type="text" class="form-control">
+					</div>
+
 					<br/>
 					<label for="drafttitle" style="color: whitesmoke;" >Enter Title</label>
 					<input type="text" placeholder="Enter title" class="form-control" id="drafttitle">

@@ -1067,6 +1067,9 @@ $(document).ready(function() {
         // take quantity
         const quantityPerDesign_quantity_arr = [];
         quantityPerDesign_quantity_arr.push($('#quantityPerDesign').val());
+
+        const markup_quantity_arr = [];
+        markup_quantity_arr.push($('#inputmarkup').val() !=0 ? $('#inputmarkup').val() : 0);
         var quantityPerDesign_quantity = $('#numbers_of_quantity').val();
 
         	    // quantity starts with 0, means that first one is quantityPerDesign, second one is quantityPerDesign1, ... so forth
@@ -1074,10 +1077,13 @@ $(document).ready(function() {
         	    // into quantityPerDesign_quantity_arr
         	    for (var q = 0; q < quantityPerDesign_quantity; q++) {
                     var quantity_order = "quantityPerDesign";
+                    var markup_order = "inputmarkup";
                     if (q > 0) {
                         quantity_order = "quantityPerDesign" + q;
+                        markup_order = "inputmarkup" + q;
                         if ($('#' + quantity_order).val() != 0 && $('#' + quantity_order).val() != null && $('#' + quantity_order).val() != '') {
-                            quantityPerDesign_quantity_arr.push($('#' + quantity_order).val())
+                            quantityPerDesign_quantity_arr.push($('#' + quantity_order).val());
+                            markup_quantity_arr.push($('#' + markup_order).val() !=0 ? $('#inputmarkup').val() : 0);
                         }
                     }
         	    }
@@ -1397,9 +1403,62 @@ $(document).ready(function() {
                      		other_finishing_price_sum += ToNumber($('#other_finishing' + i + '_price').val());
                      		other_finishing_string +=  $('#other_finishing' + i).val() + ',' + $('#other_finishing' + i + '_price').val() + '-';
 
+
               }
         }
         // ----------------------------
+        // finishing form variables
+
+        var multi_quantity_form = ''; 	// quantity form
+
+        var multi_quantity_papertype = '';
+
+        var multi_iscard = '';
+
+        var multi_finished_quantity = '';
+
+        var multi_glosslam = '';
+
+        var multi_mattlam = '';
+
+        var multi_waterbased = '';
+
+        var multi_uv = '';
+
+        var multi_varnish = '';
+
+        var multi_spotuv = '';
+
+        var multi_softtouch = '';
+
+        var multi_emboss_deboss = '';
+
+        var multi_hs = '';
+
+        var multi_diecut = '';
+
+        var multi_creasing = '';
+
+        var multi_perfectbind = '';
+
+        var multi_staplebind = '';
+
+        var multi_hardcover = '';
+
+        var multi_fold = '';
+
+        var multi_totalprice = '';
+
+        var multi_finalsellingprice = '';
+
+        var multi_markup = '';
+
+        var multi_finalprice = '';
+
+        var multi_finalpricerounded = '';
+
+        var multi_other = '';
+
 
 
         // default finishing price
@@ -2030,154 +2089,171 @@ $(document).ready(function() {
 
             $('#totalpricesum'+table_quantity_index).html(totalpricesum.toFixed(2));
             $('#totalpricerounded'+table_quantity_index).html(totalpricerounded.toFixed(2));
-            var markup = $('#inputmarkup'+table_quantity_index).val() / 100;
+            var markup = markup_quantity_arr[q] / 100;
 
             var finalpricesum = ToNumber(totalpricesum * markup + totalpricesum);
             $('#finalpricesum'+table_quantity_index).html(finalpricesum.toFixed(2));
 
             var finalpricerounded = ToNumber(totalpricerounded * markup + totalpricerounded);
             $('#finalpricerounded'+table_quantity_index).html(finalpricerounded.toFixed(2));
+            $('#finalsellingprice'+table_quantity_index).val(finalpricerounded.toFixed(2));
 
 
 
             // form for multiple quantity
             // modify data for form (add more declarations)
             		if (quantityPerDesign_quantity_arr.length > 1){
-            		$('#other_finishing_form').val(other_finishing_string);
-            		$('#formquantityperdesign').val($('#quantityPerDesign').val());
-            		$('#formpapertype').val($('#suggestionPaperUsed').html());
-            		$('#formiscard').val($('#isCard').val() == 'Yes' ? true : false);
-            		$('#formfinishproducttotalquantity').val($('#totalQuantity').val());
+            		    multi_totalprice += "&&&Quantity" + ":" + totalpricesum;
 
-            		// gloss lam
-            		if (ToNumber($('#glossLaminationPrice').val()) != 0) {
-            		    $('#formglosslam').val('Front Amount: ' + $('#glAmountf').val() + '-Back Amount: ' + $('#glAmountb').val() + '-Price: ' + $('#glossLaminationPrice').val() + '-Type: ' + $('#glossLaminationType').val());
-            		} else {
-            		    $('#formglosslam').val("Null");
-            		}
-            		// matt lam
-                    if (ToNumber($('#mattLaminationPrice').val()) != 0) {
-            		    $('#formmattlam').val('Front Amount: ' + $('#mlAmountf').val() + '-Back Amount: ' + $('#mlAmountb').val() + '-Price: ' + $('#mattLaminationPrice').val() + '-Type: ' + $('#mattLaminationType').val());
-            		} else {
-            		    $('#formmattlam').val("Null");
-            		}
-            		// water based
-                    if (ToNumber($('#waterbasedPrice').val()) != 0) {
-            		    $('#formwaterbased').val('Front Amount: ' + $('#wbAmountf').val() + '-Back Amount: ' + $('#wbAmountb').val() + '-Price: ' + $('#waterbasedPrice').val());
-            		} else {
-            		    $('#formwaterbased').val("Null");
-            		}
-            		// uv
-                    if (ToNumber($('#uvprice').val()) != 0) {
-            		    $('#formuv').val('Front Amount: ' + $('#uvAmountf').val() + '-Back Amount: ' + $('#uvAmountb').val() + '-Price: ' + $('#uvprice').val());
-            		} else {
-            		    $('#formuv').val("Null");
-            		}
-            		// varnish
-                    if (ToNumber($('#varnishprice').val()) != 0) {
-            		   $('#formvarnish').val('Front Amount: ' + $('#vnAmountf').val() + '-Back Amount: ' + $('#vnAmountb').val() + '-Price: ' + $('#varnishprice').val());
-            		} else {
-            		    $('#formvarnish').val("Null");
-            		}
-                    // spot uv
-                    if (ToNumber($('#spotuvprice').val()) != 0) {
-            		    $('#formspotuv').val('Front Amount: ' + $('#spotuvfrontamount').val() + ',Back Amount: ' + $('#spotuvbackamount').val() + ',Price: ' + $('#spotuvprice').val());
-            		} else {
-            		    $('#formspotuv').val("Null");
-            		}
-            		// soft touch
-                    if (ToNumber($('#softtouchprice').val()) != 0) {
-            		    $('#hiddensofttouch').val('Front Amount: ' + $('#softtouchfrontamount').val() + ',Back Amount: ' + $('#softtouchbackamount').val() + ',Price: ' + $('#softtouchprice').val());
-            		} else {
-            		    $('#hiddensofttouch').val("Null");
-            		}
+                        multi_markup += "&&&Quantity" + ":" + markup_quantity_arr[q];
+
+            		    multi_finalsellingprice += "&&&Quantity" + ":" + $('#finalsellingprice'+table_quantity_index).val();
+
+                        multi_finalprice += "&&&Quantity" + ":" + finalpricesum;
+
+                        multi_finalpricerounded += "&&&Quantity" + ":" + finalpricerounded;
+
+                        multi_other += "&&&Quantity" + ":" + other_finishing_string;
+
+                        multi_quantity_form += "&&&Quantity" + ":" + quantityPerDesign_quantity_arr[q];
+
+                        multi_quantity_papertype += "&&&Quantity" + ":" + pptype_arr[q].type;
+
+            		    $('#formiscard').val($('#isCard').val() == 'Yes' ? true : false);
+
+            		    multi_finished_quantity += "&&&Quantity:" + finishedProductTotalQuantity;
+
+
+            		    // gloss lam
+            		    if (ToNumber($('#glossLaminationPrice').val()) != 0) {
+            		        multi_glosslam += "&&&Quantity" + ":" + 'Front Amount: ' + $('#glAmountf').val() + '-Back Amount: ' + $('#glAmountb').val() + '-Price: ' + $('#glossLaminationPrice').val() + '-Type: ' + $('#glossLaminationType').val();
+            		    } else {
+            		        multi_glosslam += "&&&Quantity" + ":" + "Null";
+            		    }
+            		    // matt lam
+                        if (ToNumber($('#mattLaminationPrice').val()) != 0) {
+            		        multi_mattlam += "&&&Quantity" + ":" + 'Front Amount: ' + $('#mlAmountf').val() + '-Back Amount: ' + $('#mlAmountb').val() + '-Price: ' + $('#mattLaminationPrice').val() + '-Type: ' + $('#mattLaminationType').val();
+            		    } else{
+            		        multi_mattlam += "&&&Quantity" + ":" + "Null";
+            		    }
+            		    // water based
+                        if (ToNumber($('#waterbasedPrice').val()) != 0) {
+                             multi_waterbased += "&&&Quantity" + ":" + 'Front Amount: ' + $('#wbAmountf').val() + '-Back Amount: ' + $('#wbAmountb').val() + '-Price: ' + $('#waterbasedPrice').val();
+            		    } else{
+            		         multi_waterbased += "&&&Quantity" + ":" + "Null";
+            		    }
+            		    // uv
+                        if (ToNumber($('#uvprice').val()) != 0) {
+            		        multi_uv += "&&&Quantity" + ":" + 'Front Amount: ' + $('#uvAmountf').val() + '-Back Amount: ' + $('#uvAmountb').val() + '-Price: ' + $('#uvprice').val();
+            		    } else {
+            		        multi_uv += "&&&Quantity" + ":" + "Null";
+            		    }
+            		    // varnish
+                        if (ToNumber($('#varnishprice').val()) != 0) {
+                            multi_varnish += "&&&Quantity" + ":" + 'Front Amount: ' + $('#vnAmountf').val() + '-Back Amount: ' + $('#vnAmountb').val() + '-Price: ' + $('#varnishprice').val();
+            		    } else{
+            		        multi_varnish += "&&&Quantity" + ":" + "Null";
+            		    }
+                        // spot uv
+                        if (ToNumber($('#spotuvprice').val()) != 0) {
+                            multi_spotuv += "&&&Quantity" + ":" + 'Front Amount: ' + $('#spotuvfrontamount').val() + ',Back Amount: ' + $('#spotuvbackamount').val() + ',Price: ' + $('#spotuvprice').val();
+            		    }else{
+                            multi_spotuv += "&&&Quantity" + ":" + "Null";
+                        }
+            		    // soft touch
+                        if (ToNumber($('#softtouchprice').val()) != 0) {
+                            multi_softtouch += "&&&Quantity" + ":" + 'Front Amount: ' + $('#softtouchfrontamount').val() + ',Back Amount: ' + $('#softtouchbackamount').val() + ',Price: ' + $('#softtouchprice').val();
+            		    }else{
+                            multi_softtouch += "&&&Quantity" + ":" + "Null";
+                        }
 
             		// -----------
             		// Emboss and Deboss
-                    if (ToNumber($('#embossdebossprice').val()) != 0) {
-            		    $('#formembossdeboss').val("EMBOSS,Width: " +  $('#embosswidth1').val() + " Length: " +  $('#embosslength1').val() +  " Amount: " + $('#embossamount1').val() +
-            		    "," + "Width: " +  $('#embosswidth2').val() + " Length: " +  $('#embosslength2').val() +  " Amount: " + $('#embossamount2').val() +
-            		    "," +  "Width: " +  $('#embosswidth3').val() + " Length: " +  $('#embosslength3').val() +  " Amount: " + $('#embossamount3').val() +
-            		    "," + "Width: " +  $('#embosswidth4').val() + " Length: " +  $('#embosslength4').val() +  " Amount: " + $('#embossamount4').val() +
-            		    "," + "Width: " +  $('#embosswidth5').val() + " Length: " +  $('#embosslength5').val() +  " Amount: " + $('#embossamount5').val() +
-            		    ",DEBOSS," + "Width: " +  $('#debosswidth1').val() + " Length 1: " +  $('#debosslength1').val() +  " Amount: " + $('#debossamount1').val() +
-            		    "," + "Width: " +  $('#debosswidth2').val() + " Length: " +  $('#debosslength2').val() +  " Amount: " + $('#debossamount2').val() +
-            		    "," + "Width: " +  $('#debosswidth3').val() + " Length: " +  $('#debosslength3').val() +  " Amount: " + $('#debossamount3').val() +
-            		    "," + "Width: " +  $('#debosswidth4').val() + " Length: " +  $('#debosslength4').val() +  " Amount: " + $('#debossamount4').val() +
-            		    "," + "Width: " +  $('#debosswidth5').val() + " Length: " +  $('#debosslength5').val() +  " Amount: " + $('#debossamount5').val() +
-            		    "," + "Price: " + $('#embossdebossprice').val());		}
-            		else {
-            		    $('#formembossdeboss').val("Null");
-            		}
+                        if (ToNumber($('#embossdebossprice').val()) != 0) {
+                            multi_emboss_deboss += "&&&Quantity" + ":" + "EMBOSS,Width: " +  $('#embosswidth1').val() + " Length: " +  $('#embosslength1').val() +  " Amount: " + $('#embossamount1').val() +
+                                                    "," + "Width: " +  $('#embosswidth2').val() + " Length: " +  $('#embosslength2').val() +  " Amount: " + $('#embossamount2').val() +
+                                                    "," +  "Width: " +  $('#embosswidth3').val() + " Length: " +  $('#embosslength3').val() +  " Amount: " + $('#embossamount3').val() +
+                                                    "," + "Width: " +  $('#embosswidth4').val() + " Length: " +  $('#embosslength4').val() +  " Amount: " + $('#embossamount4').val() +
+                                                    "," + "Width: " +  $('#embosswidth5').val() + " Length: " +  $('#embosslength5').val() +  " Amount: " + $('#embossamount5').val() +
+                                                    ",DEBOSS," + "Width: " +  $('#debosswidth1').val() + " Length 1: " +  $('#debosslength1').val() +  " Amount: " + $('#debossamount1').val() +
+                                                    "," + "Width: " +  $('#debosswidth2').val() + " Length: " +  $('#debosslength2').val() +  " Amount: " + $('#debossamount2').val() +
+                                                    "," + "Width: " +  $('#debosswidth3').val() + " Length: " +  $('#debosslength3').val() +  " Amount: " + $('#debossamount3').val() +
+                                                    "," + "Width: " +  $('#debosswidth4').val() + " Length: " +  $('#debosslength4').val() +  " Amount: " + $('#debossamount4').val() +
+                                                    "," + "Width: " +  $('#debosswidth5').val() + " Length: " +  $('#debosslength5').val() +  " Amount: " + $('#debossamount5').val() +
+                                                    "," + "Price: " + $('#embossdebossprice').val();
 
-            		// ------------
-            		// Hot stamping
-                    if (ToNumber($('#hsprice').val()) != 0) {
-                        $('#formhotstamping').val("FRONT,Width: " +  $('#hswidthfront1').val() + " Length: " +  $('#hslengthfront1').val() +
-            		    "," + "Width: " +  $('#hswidthfront2').val() + " Length: " +  $('#hslengthfront2').val() +
-            		    "," + "Width: " +  $('#hswidthfront3').val() + " Length: " +  $('#hslengthfront3').val() +
-            		    "," + "Width: " +  $('#hswidthfront4').val() + " Length: " +  $('#hslengthfront4').val() +
-            		    "," + "Width: " +  $('#hswidthfront5').val() + " Length: " +  $('#hslengthfront5').val() +  ",Amount: " + $('#hsamountfront').val() +
-            		    "," + "BACK,Width: " +  $('#hswidthback1').val() + " Length: " +  $('#hslengthback1').val() +
-            		    "," + "Width: " +  $('#hswidthback2').val() + " Length: " +  $('#hslengthback2').val() +
-            		    "," +  "Width: " +  $('#hswidthback3').val() + " Length: " +  $('#hslengthback3').val() +
-            		    "," + "Width: " +  $('#hswidthback4').val() + " Length: " +  $('#hslengthback4').val() +
-            		    "," + "Width: " +  $('#hswidthback5').val() + " Length: " +  $('#hslengthback5').val() + ",Amount: " + $('#hsamountback').val() +
-            		    "," + "Price: " + $('#hsprice').val());
             		    } else {
-            		    $('#formhotstamping').val("Null");
-            		}
+            		        multi_emboss_deboss += "&&&Quantity" + ":" + "Null";
+            		    }
 
-                    // ------------
-                    // Diecut
-                    if (ToNumber($('#diecutprice').html()) != 0) {
-                        $('#formdiecut').val("Width: " +  $('#diecutwidth1').val() + " Length: " +  $('#diecutlength1').val() + " Amount: " + $('#diecutamount1').val() + " Number of Knives: " + $('#numberofknives1').val() +
-            		    "," + "Width: " +  $('#diecutwidth2').val() + " Length: " +  $('#diecutlength2').val() + " Amount: " + $('#diecutamount2').val() + " Number of Knives: " + $('#numberofknives2').val() +
-            		    "," + "Width: " +  $('#diecutwidth3').val() + " Length: " +  $('#diecutlength3').val() + " Amount: " + $('#diecutamount3').val() + " Number of Knives: " + $('#numberofknives3').val() +
-            		    "," + "Width: " +  $('#diecutwidth4').val() + " Length: " +  $('#diecutlength4').val() + " Amount: " + $('#diecutamount4').val() + " Number of Knives: " + $('#numberofknives4').val() +
-            		    "," + "Price: " + $('#diecutprice').html());
-            		} else {
-            		    $('#formdiecut').val("Null");
-            		}
 
-                    // creasing line
-                    if (ToNumber($('#creasinglineprice').html()) != 0) {
-            		    $('#hiddencreasingline').val("Quantity: " + $('#creasinglinequantity').val() + "-Price: " + $('#creasinglineprice').html());
-            		} else {
-            		    $('#hiddencreasingline').val("Null");
-            		}
+            		    // ------------
+            		    // Hot stamping
+                        if (ToNumber($('#hsprice').val()) != 0) {
+                            multi_hs += "&&&Quantity" + ":" + "FRONT,Width: " +  $('#hswidthfront1').val() + " Length: " +  $('#hslengthfront1').val() +
+                                        "," + "Width: " +  $('#hswidthfront2').val() + " Length: " +  $('#hslengthfront2').val() +
+                                        "," + "Width: " +  $('#hswidthfront3').val() + " Length: " +  $('#hslengthfront3').val() +
+                                        "," + "Width: " +  $('#hswidthfront4').val() + " Length: " +  $('#hslengthfront4').val() +
+                                        "," + "Width: " +  $('#hswidthfront5').val() + " Length: " +  $('#hslengthfront5').val() +  ",Amount: " + $('#hsamountfront').val() +
+                                        "," + "BACK,Width: " +  $('#hswidthback1').val() + " Length: " +  $('#hslengthback1').val() +
+                                        "," + "Width: " +  $('#hswidthback2').val() + " Length: " +  $('#hslengthback2').val() +
+                                        "," +  "Width: " +  $('#hswidthback3').val() + " Length: " +  $('#hslengthback3').val() +
+                                        "," + "Width: " +  $('#hswidthback4').val() + " Length: " +  $('#hslengthback4').val() +
+                                        "," + "Width: " +  $('#hswidthback5').val() + " Length: " +  $('#hslengthback5').val() + ",Amount: " + $('#hsamountback').val() +
+                                        "," + "Price: " + $('#hsprice').val();
 
-            		// perfect bind
-                    if (ToNumber($('#hiddenperfectbind').val()) != 0) {
-            		    $('#hiddenperfectbind').val("Quantity: " + $('#perfectbindquantity').val()+ ",Price: " + $('#hiddenperfectbind').val());
-            		} else {
-            		    $('#hiddenperfectbind').val("Null");
-            		}
-            		// staple bind
-                    if (ToNumber($('#hiddenstaplebind').val()) != 0) {
-            		    $('#hiddenstaplebind').val("Quantity: " + $('#staplebindquantity').val()+ ",Price: " + $('#hiddenstaplebind').val());
-            		} else {
-            		    $('#hiddenstaplebind').val("Null");
-            		}
-            		// hard cover
-                    if (ToNumber($('#hiddenhardcover').val()) != 0) {
-            		    $('#hiddenhardcover').val("Quantity: " + $('#hardcoverquantity').val()+ ",Price: " + $('#hiddenhardcover').val());
-            		} else {
-            		    $('#hiddenhardcover').val("Null");
-            		}
-            		// folding
-                    if (ToNumber($('#hiddenfold').val()) != 0) {
-            		    $('#hiddenfold').val("Folds: " + $('#foldnumber').val() +",Quantity: " + $('#foldquantity').val()+ ",Price: " + $('#hiddenfold').val());
-            		} else {
-            		    $('#hiddenfold').val("Null");
-            		}
+            		        }else {
+                                multi_hs += "&&&Quantity" + ":" + "Null";
+                            }
 
-            	  }
+                        // ------------
+                        // Diecut
+                        if (ToNumber($('#diecutprice').html()) != 0) {
+                            multi_diecut += "&&&Quantity" + ":" + "Width: " +  $('#diecutwidth1').val() + " Length: " +  $('#diecutlength1').val() + " Amount: " + $('#diecutamount1').val() + " Number of Knives: " + $('#numberofknives1').val() +
+                                            "," + "Width: " +  $('#diecutwidth2').val() + " Length: " +  $('#diecutlength2').val() + " Amount: " + $('#diecutamount2').val() + " Number of Knives: " + $('#numberofknives2').val() +
+                                            "," + "Width: " +  $('#diecutwidth3').val() + " Length: " +  $('#diecutlength3').val() + " Amount: " + $('#diecutamount3').val() + " Number of Knives: " + $('#numberofknives3').val() +
+                                            "," + "Width: " +  $('#diecutwidth4').val() + " Length: " +  $('#diecutlength4').val() + " Amount: " + $('#diecutamount4').val() + " Number of Knives: " + $('#numberofknives4').val() +
+                                            "," + "Price: " + $('#diecutprice').html();
+            		    }else {
+                            multi_diecut += "&&&Quantity" + ":" + "Null";
+                        }
+
+                        // creasing line
+                        if (ToNumber($('#creasinglineprice').html()) != 0) {
+                            multi_creasing += "&&&Quantity" + ":" + "Quantity: " + $('#creasinglinequantity').val() + "-Price: " + $('#creasinglineprice').html();
+            		    }else {
+                            multi_creasing += "&&&Quantity" + ":" + "Null";
+                        }
+
+            		    // perfect bind
+                        if (ToNumber($('#hiddenperfectbind').val()) != 0) {
+                            multi_perfectbind += "&&&Quantity" + ":" + "Quantity: " + $('#perfectbindquantity').val()+ ",Price: " + $('#hiddenperfectbind').val();
+            		    }else {
+                            multi_perfectbind += "&&&Quantity" + ":" + "Null";
+                        }
+            		    // staple bind
+                        if (ToNumber($('#hiddenstaplebind').val()) != 0) {
+                            multi_staplebind += "&&&Quantity" + ":" + "Quantity: " + $('#staplebindquantity').val()+ ",Price: " + $('#hiddenstaplebind').val();
+            		    }else {
+                            multi_staplebind += "&&&Quantity" + ":" + "Null";
+                        }
+            		    // hard cover
+                        if (ToNumber($('#hiddenhardcover').val()) != 0) {
+                            multi_hardcover += "&&&Quantity" + ":" + "Quantity: " + $('#hardcoverquantity').val()+ ",Price: " + $('#hiddenhardcover').val();
+            		    }else {
+                            multi_hardcover += "&&&Quantity" + ":" + "Null";
+                        }
+            		    // folding
+                        if (ToNumber($('#hiddenfold').val()) != 0) {
+                            multi_fold += "&&&Quantity" + ":" + "Folds: " + $('#foldnumber').val() +",Quantity: " + $('#foldquantity').val()+ ",Price: " + $('#hiddenfold').val();
+            		    }else {
+                            multi_fold += "&&&Quantity" + ":" + "Null";
+                        }
+
+            	    } // multiple quantity form
         }
         // ----------------------------------------------------------------
         // for loop ends here
-
-
 
 
         // done finishing price calculation
@@ -2201,142 +2277,171 @@ $(document).ready(function() {
 
 		// declare values for form
 		if (quantityPerDesign_quantity_arr.length <= 1){
-		$('#hiddentotalprice').val($('#totalpricesum').html());
-        $('#finalsellingprice').val(totalpricesum.toFixed(2));
-        $('#hiddenmarkup').val($('#inputmarkup').val());
-        $('#hiddenfinalprice').val($('#finalpricesum').html());
-        $('#hiddenfinalpricerounded').val($('#finalpricerounded').html());
 
-		$('#other_finishing_form').val(other_finishing_string);
-		$('#formquantityperdesign').val($('#quantityPerDesign').val());
-		$('#formpapertype').val($('#suggestionPaperUsed').html());
-		$('#formiscard').val($('#isCard').val() == 'Yes' ? true : false);
-		$('#formfinishproducttotalquantity').val($('#totalQuantity').val());
+		    $('#hiddentotalprice').val($('#totalpricesum').html());
+            $('#finalsellingprice').val($('#finalpricerounded').html());
+            $('#hiddenfinalsellingprice').val($('#finalsellingprice').val());
+            $('#hiddenmarkup').val($('#inputmarkup').val());
+            $('#hiddenfinalprice').val($('#finalpricesum').html());
+            $('#hiddenfinalpricerounded').val($('#finalpricerounded').html());
 
-		// gloss lam
-		if (ToNumber($('#glossLaminationPrice').val()) != 0) {
-		    $('#formglosslam').val('Front Amount: ' + $('#glAmountf').val() + '-Back Amount: ' + $('#glAmountb').val() + '-Price: ' + $('#glossLaminationPrice').val() + '-Type: ' + $('#glossLaminationType').val());
-		} else {
-		    $('#formglosslam').val("Null");
-		}
-		// matt lam
-        if (ToNumber($('#mattLaminationPrice').val()) != 0) {
-		    $('#formmattlam').val('Front Amount: ' + $('#mlAmountf').val() + '-Back Amount: ' + $('#mlAmountb').val() + '-Price: ' + $('#mattLaminationPrice').val() + '-Type: ' + $('#mattLaminationType').val());
-		} else {
-		    $('#formmattlam').val("Null");
-		}
-		// water based
-        if (ToNumber($('#waterbasedPrice').val()) != 0) {
-		    $('#formwaterbased').val('Front Amount: ' + $('#wbAmountf').val() + '-Back Amount: ' + $('#wbAmountb').val() + '-Price: ' + $('#waterbasedPrice').val());
-		} else {
-		    $('#formwaterbased').val("Null");
-		}
-		// uv
-        if (ToNumber($('#uvprice').val()) != 0) {
-		    $('#formuv').val('Front Amount: ' + $('#uvAmountf').val() + '-Back Amount: ' + $('#uvAmountb').val() + '-Price: ' + $('#uvprice').val());
-		} else {
-		    $('#formuv').val("Null");
-		}
-		// varnish
-        if (ToNumber($('#varnishprice').val()) != 0) {
-		   $('#formvarnish').val('Front Amount: ' + $('#vnAmountf').val() + '-Back Amount: ' + $('#vnAmountb').val() + '-Price: ' + $('#varnishprice').val());
-		} else {
-		    $('#formvarnish').val("Null");
-		}
-        // spot uv
-        if (ToNumber($('#spotuvprice').val()) != 0) {
-		    $('#formspotuv').val('Front Amount: ' + $('#spotuvfrontamount').val() + ',Back Amount: ' + $('#spotuvbackamount').val() + ',Price: ' + $('#spotuvprice').val());
-		} else {
-		    $('#formspotuv').val("Null");
-		}
-		// soft touch
-        if (ToNumber($('#softtouchprice').val()) != 0) {
-		    $('#hiddensofttouch').val('Front Amount: ' + $('#softtouchfrontamount').val() + ',Back Amount: ' + $('#softtouchbackamount').val() + ',Price: ' + $('#softtouchprice').val());
-		} else {
-		    $('#hiddensofttouch').val("Null");
-		}
+		    $('#other_finishing_form').val(other_finishing_string);
+		    $('#formquantityperdesign').val($('#quantityPerDesign').val());
+		    $('#formpapertype').val($('#suggestionPaperUsed').html());
+		    $('#formiscard').val($('#isCard').val() == 'Yes' ? true : false);
+		    $('#formfinishproducttotalquantity').val($('#totalQuantity').val());
 
-		// -----------
-		// Emboss and Deboss
-        if (ToNumber($('#embossdebossprice').val()) != 0) {
-		    $('#formembossdeboss').val("EMBOSS,Width: " +  $('#embosswidth1').val() + " Length: " +  $('#embosslength1').val() +  " Amount: " + $('#embossamount1').val() +
-		    "," + "Width: " +  $('#embosswidth2').val() + " Length: " +  $('#embosslength2').val() +  " Amount: " + $('#embossamount2').val() +
-		    "," +  "Width: " +  $('#embosswidth3').val() + " Length: " +  $('#embosslength3').val() +  " Amount: " + $('#embossamount3').val() +
-		    "," + "Width: " +  $('#embosswidth4').val() + " Length: " +  $('#embosslength4').val() +  " Amount: " + $('#embossamount4').val() +
-		    "," + "Width: " +  $('#embosswidth5').val() + " Length: " +  $('#embosslength5').val() +  " Amount: " + $('#embossamount5').val() +
-		    ",DEBOSS," + "Width: " +  $('#debosswidth1').val() + " Length 1: " +  $('#debosslength1').val() +  " Amount: " + $('#debossamount1').val() +
-		    "," + "Width: " +  $('#debosswidth2').val() + " Length: " +  $('#debosslength2').val() +  " Amount: " + $('#debossamount2').val() +
-		    "," + "Width: " +  $('#debosswidth3').val() + " Length: " +  $('#debosslength3').val() +  " Amount: " + $('#debossamount3').val() +
-		    "," + "Width: " +  $('#debosswidth4').val() + " Length: " +  $('#debosslength4').val() +  " Amount: " + $('#debossamount4').val() +
-		    "," + "Width: " +  $('#debosswidth5').val() + " Length: " +  $('#debosslength5').val() +  " Amount: " + $('#debossamount5').val() +
-		    "," + "Price: " + $('#embossdebossprice').val());		}
-		else {
-		    $('#formembossdeboss').val("Null");
-		}
-
-		// ------------
-		// Hot stamping
-        if (ToNumber($('#hsprice').val()) != 0) {
-            $('#formhotstamping').val("FRONT,Width: " +  $('#hswidthfront1').val() + " Length: " +  $('#hslengthfront1').val() +
-		    "," + "Width: " +  $('#hswidthfront2').val() + " Length: " +  $('#hslengthfront2').val() +
-		    "," + "Width: " +  $('#hswidthfront3').val() + " Length: " +  $('#hslengthfront3').val() +
-		    "," + "Width: " +  $('#hswidthfront4').val() + " Length: " +  $('#hslengthfront4').val() +
-		    "," + "Width: " +  $('#hswidthfront5').val() + " Length: " +  $('#hslengthfront5').val() +  ",Amount: " + $('#hsamountfront').val() +
-		    "," + "BACK,Width: " +  $('#hswidthback1').val() + " Length: " +  $('#hslengthback1').val() +
-		    "," + "Width: " +  $('#hswidthback2').val() + " Length: " +  $('#hslengthback2').val() +
-		    "," +  "Width: " +  $('#hswidthback3').val() + " Length: " +  $('#hslengthback3').val() +
-		    "," + "Width: " +  $('#hswidthback4').val() + " Length: " +  $('#hslengthback4').val() +
-		    "," + "Width: " +  $('#hswidthback5').val() + " Length: " +  $('#hslengthback5').val() + ",Amount: " + $('#hsamountback').val() +
-		    "," + "Price: " + $('#hsprice').val());
+		    // gloss lam
+		    if (ToNumber($('#glossLaminationPrice').val()) != 0) {
+		        $('#formglosslam').val('Front Amount: ' + $('#glAmountf').val() + '-Back Amount: ' + $('#glAmountb').val() + '-Price: ' + $('#glossLaminationPrice').val() + '-Type: ' + $('#glossLaminationType').val());
 		    } else {
-		    $('#formhotstamping').val("Null");
-		}
+		        $('#formglosslam').val("Null");
+		    }
+		    // matt lam
+            if (ToNumber($('#mattLaminationPrice').val()) != 0) {
+		        $('#formmattlam').val('Front Amount: ' + $('#mlAmountf').val() + '-Back Amount: ' + $('#mlAmountb').val() + '-Price: ' + $('#mattLaminationPrice').val() + '-Type: ' + $('#mattLaminationType').val());
+		    } else {
+		        $('#formmattlam').val("Null");
+		    }
+		    // water based
+            if (ToNumber($('#waterbasedPrice').val()) != 0) {
+		        $('#formwaterbased').val('Front Amount: ' + $('#wbAmountf').val() + '-Back Amount: ' + $('#wbAmountb').val() + '-Price: ' + $('#waterbasedPrice').val());
+		    } else {
+		        $('#formwaterbased').val("Null");
+		    }
+		    // uv
+            if (ToNumber($('#uvprice').val()) != 0) {
+		        $('#formuv').val('Front Amount: ' + $('#uvAmountf').val() + '-Back Amount: ' + $('#uvAmountb').val() + '-Price: ' + $('#uvprice').val());
+		    } else {
+		        $('#formuv').val("Null");
+		    }
+		    // varnish
+            if (ToNumber($('#varnishprice').val()) != 0) {
+		       $('#formvarnish').val('Front Amount: ' + $('#vnAmountf').val() + '-Back Amount: ' + $('#vnAmountb').val() + '-Price: ' + $('#varnishprice').val());
+		    } else {
+		        $('#formvarnish').val("Null");
+		    }
+            // spot uv
+            if (ToNumber($('#spotuvprice').val()) != 0) {
+		        $('#formspotuv').val('Front Amount: ' + $('#spotuvfrontamount').val() + ',Back Amount: ' + $('#spotuvbackamount').val() + ',Price: ' + $('#spotuvprice').val());
+		    } else {
+		        $('#formspotuv').val("Null");
+		    }
+		    // soft touch
+            if (ToNumber($('#softtouchprice').val()) != 0) {
+		        $('#hiddensofttouch').val('Front Amount: ' + $('#softtouchfrontamount').val() + ',Back Amount: ' + $('#softtouchbackamount').val() + ',Price: ' + $('#softtouchprice').val());
+		    } else {
+		        $('#hiddensofttouch').val("Null");
+		    }
 
-        // ------------
-        // Diecut
-        if (ToNumber($('#diecutprice').html()) != 0) {
-            $('#formdiecut').val("Width: " +  $('#diecutwidth1').val() + " Length: " +  $('#diecutlength1').val() + " Amount: " + $('#diecutamount1').val() + " Number of Knives: " + $('#numberofknives1').val() +
-		    "," + "Width: " +  $('#diecutwidth2').val() + " Length: " +  $('#diecutlength2').val() + " Amount: " + $('#diecutamount2').val() + " Number of Knives: " + $('#numberofknives2').val() +
-		    "," + "Width: " +  $('#diecutwidth3').val() + " Length: " +  $('#diecutlength3').val() + " Amount: " + $('#diecutamount3').val() + " Number of Knives: " + $('#numberofknives3').val() +
-		    "," + "Width: " +  $('#diecutwidth4').val() + " Length: " +  $('#diecutlength4').val() + " Amount: " + $('#diecutamount4').val() + " Number of Knives: " + $('#numberofknives4').val() +
-		    "," + "Price: " + $('#diecutprice').html());
-		} else {
-		    $('#formdiecut').val("Null");
-		}
+		    // -----------
+		    // Emboss and Deboss
+            if (ToNumber($('#embossdebossprice').val()) != 0) {
+		        $('#formembossdeboss').val("EMBOSS,Width: " +  $('#embosswidth1').val() + " Length: " +  $('#embosslength1').val() +  " Amount: " + $('#embossamount1').val() +
+		        "," + "Width: " +  $('#embosswidth2').val() + " Length: " +  $('#embosslength2').val() +  " Amount: " + $('#embossamount2').val() +
+		        "," +  "Width: " +  $('#embosswidth3').val() + " Length: " +  $('#embosslength3').val() +  " Amount: " + $('#embossamount3').val() +
+		        "," + "Width: " +  $('#embosswidth4').val() + " Length: " +  $('#embosslength4').val() +  " Amount: " + $('#embossamount4').val() +
+		        "," + "Width: " +  $('#embosswidth5').val() + " Length: " +  $('#embosslength5').val() +  " Amount: " + $('#embossamount5').val() +
+		        ",DEBOSS," + "Width: " +  $('#debosswidth1').val() + " Length 1: " +  $('#debosslength1').val() +  " Amount: " + $('#debossamount1').val() +
+		        "," + "Width: " +  $('#debosswidth2').val() + " Length: " +  $('#debosslength2').val() +  " Amount: " + $('#debossamount2').val() +
+		        "," + "Width: " +  $('#debosswidth3').val() + " Length: " +  $('#debosslength3').val() +  " Amount: " + $('#debossamount3').val() +
+		        "," + "Width: " +  $('#debosswidth4').val() + " Length: " +  $('#debosslength4').val() +  " Amount: " + $('#debossamount4').val() +
+		        "," + "Width: " +  $('#debosswidth5').val() + " Length: " +  $('#debosslength5').val() +  " Amount: " + $('#debossamount5').val() +
+		        "," + "Price: " + $('#embossdebossprice').val());		}
+		    else {
+		        $('#formembossdeboss').val("Null");
+		    }
 
-        // creasing line
-        if (ToNumber($('#creasinglineprice').html()) != 0) {
-		    $('#hiddencreasingline').val("Quantity: " + $('#creasinglinequantity').val() + "-Price: " + $('#creasinglineprice').html());
-		} else {
-		    $('#hiddencreasingline').val("Null");
-		}
+		    // ------------
+		    // Hot stamping
+            if (ToNumber($('#hsprice').val()) != 0) {
+                $('#formhotstamping').val("FRONT,Width: " +  $('#hswidthfront1').val() + " Length: " +  $('#hslengthfront1').val() +
+		        "," + "Width: " +  $('#hswidthfront2').val() + " Length: " +  $('#hslengthfront2').val() +
+		        "," + "Width: " +  $('#hswidthfront3').val() + " Length: " +  $('#hslengthfront3').val() +
+		        "," + "Width: " +  $('#hswidthfront4').val() + " Length: " +  $('#hslengthfront4').val() +
+		        "," + "Width: " +  $('#hswidthfront5').val() + " Length: " +  $('#hslengthfront5').val() +  ",Amount: " + $('#hsamountfront').val() +
+		        "," + "BACK,Width: " +  $('#hswidthback1').val() + " Length: " +  $('#hslengthback1').val() +
+		        "," + "Width: " +  $('#hswidthback2').val() + " Length: " +  $('#hslengthback2').val() +
+		        "," +  "Width: " +  $('#hswidthback3').val() + " Length: " +  $('#hslengthback3').val() +
+		        "," + "Width: " +  $('#hswidthback4').val() + " Length: " +  $('#hslengthback4').val() +
+		        "," + "Width: " +  $('#hswidthback5').val() + " Length: " +  $('#hslengthback5').val() + ",Amount: " + $('#hsamountback').val() +
+		        "," + "Price: " + $('#hsprice').val());
+		        } else {
+		        $('#formhotstamping').val("Null");
+		    }
 
-		// perfect bind
-        if (ToNumber($('#hiddenperfectbind').val()) != 0) {
-		    $('#hiddenperfectbind').val("Quantity: " + $('#perfectbindquantity').val()+ ",Price: " + $('#hiddenperfectbind').val());
-		} else {
-		    $('#hiddenperfectbind').val("Null");
-		}
-		// staple bind
-        if (ToNumber($('#hiddenstaplebind').val()) != 0) {
-		    $('#hiddenstaplebind').val("Quantity: " + $('#staplebindquantity').val()+ ",Price: " + $('#hiddenstaplebind').val());
-		} else {
-		    $('#hiddenstaplebind').val("Null");
-		}
-		// hard cover
-        if (ToNumber($('#hiddenhardcover').val()) != 0) {
-		    $('#hiddenhardcover').val("Quantity: " + $('#hardcoverquantity').val()+ ",Price: " + $('#hiddenhardcover').val());
-		} else {
-		    $('#hiddenhardcover').val("Null");
-		}
-		// folding
-        if (ToNumber($('#hiddenfold').val()) != 0) {
-		    $('#hiddenfold').val("Folds: " + $('#foldnumber').val() +",Quantity: " + $('#foldquantity').val()+ ",Price: " + $('#hiddenfold').val());
-		} else {
-		    $('#hiddenfold').val("Null");
-		}
+            // ------------
+            // Diecut
+            if (ToNumber($('#diecutprice').html()) != 0) {
+                $('#formdiecut').val("Width: " +  $('#diecutwidth1').val() + " Length: " +  $('#diecutlength1').val() + " Amount: " + $('#diecutamount1').val() + " Number of Knives: " + $('#numberofknives1').val() +
+		        "," + "Width: " +  $('#diecutwidth2').val() + " Length: " +  $('#diecutlength2').val() + " Amount: " + $('#diecutamount2').val() + " Number of Knives: " + $('#numberofknives2').val() +
+		        "," + "Width: " +  $('#diecutwidth3').val() + " Length: " +  $('#diecutlength3').val() + " Amount: " + $('#diecutamount3').val() + " Number of Knives: " + $('#numberofknives3').val() +
+		        "," + "Width: " +  $('#diecutwidth4').val() + " Length: " +  $('#diecutlength4').val() + " Amount: " + $('#diecutamount4').val() + " Number of Knives: " + $('#numberofknives4').val() +
+		        "," + "Price: " + $('#diecutprice').html());
+		    } else {
+		        $('#formdiecut').val("Null");
+		    }
 
-	  }
+            // creasing line
+            if (ToNumber($('#creasinglineprice').html()) != 0) {
+		        $('#hiddencreasingline').val("Quantity: " + $('#creasinglinequantity').val() + "-Price: " + $('#creasinglineprice').html());
+		    } else {
+		        $('#hiddencreasingline').val("Null");
+		    }
+
+		    // perfect bind
+            if (ToNumber($('#hiddenperfectbind').val()) != 0) {
+		        $('#hiddenperfectbind').val("Quantity: " + $('#perfectbindquantity').val()+ ",Price: " + $('#hiddenperfectbind').val());
+		    } else {
+		        $('#hiddenperfectbind').val("Null");
+		    }
+		    // staple bind
+            if (ToNumber($('#hiddenstaplebind').val()) != 0) {
+		        $('#hiddenstaplebind').val("Quantity: " + $('#staplebindquantity').val()+ ",Price: " + $('#hiddenstaplebind').val());
+		    } else {
+		        $('#hiddenstaplebind').val("Null");
+		    }
+		    // hard cover
+            if (ToNumber($('#hiddenhardcover').val()) != 0) {
+		        $('#hiddenhardcover').val("Quantity: " + $('#hardcoverquantity').val()+ ",Price: " + $('#hiddenhardcover').val());
+		    } else {
+		        $('#hiddenhardcover').val("Null");
+		    }
+		    // folding
+            if (ToNumber($('#hiddenfold').val()) != 0) {
+		        $('#hiddenfold').val("Folds: " + $('#foldnumber').val() +",Quantity: " + $('#foldquantity').val()+ ",Price: " + $('#hiddenfold').val());
+		    } else {
+		        $('#hiddenfold').val("Null");
+		    }
+
+	    } else {
+	        $('#hiddentotalprice').val(multi_totalprice);
+	        console.log(multi_totalprice);
+            $('#hiddenmarkup').val(multi_markup);
+            $('#hiddenfinalsellingprice').val(multi_finalsellingprice);
+            $('#hiddenfinalprice').val(multi_finalprice);
+            $('#hiddenfinalpricerounded').val(multi_finalpricerounded);
+	        $('#other_finishing_form').val(multi_other);
+            $('#formquantityperdesign').val(multi_quantity_form);
+            $('#formpapertype').val(multi_quantity_papertype);
+            $('#formfinishproducttotalquantity').val(multi_finished_quantity);
+            $('#formglosslam').val(multi_glosslam);
+            $('#formmattlam').val(multi_mattlam);
+            $('#formwaterbased').val(multi_waterbased);
+            $('#formuv').val(multi_uv);
+            $('#formvarnish').val(multi_varnish);
+            $('#formspotuv').val(multi_spotuv);
+            $('#hiddensofttouch').val(multi_softtouch);
+
+            $('#formembossdeboss').val(multi_emboss_deboss);
+            $('#formhotstamping').val(multi_hs);
+            $('#formdiecut').val(multi_diecut);
+            $('#hiddencreasingline').val(multi_creasing);
+            $('#hiddenperfectbind').val(multi_perfectbind);
+            $('#hiddenstaplebind').val(multi_staplebind);
+            $('#hiddenhardcover').val(multi_hardcover);
+            $('#hiddenfold').val(multi_fold);
+	    }
 		// done form ----------------------------------------------- for 1 quantity
 	});
 

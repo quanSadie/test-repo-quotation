@@ -1,5 +1,7 @@
                         // multiple quantity --------------------------------
 let rowCounter_quantity = 0;
+let rowCounter_markup = 0;
+
 
 const addQuantityButton = document.getElementById("add_row_quantity_btn");
 
@@ -31,5 +33,25 @@ addQuantityButton.addEventListener("click", function() {
         // Increment the row counter
         rowCounter_quantity++;
 
+
+          // ------------ Take markup ---------------
+            // Get the existing markup container
+            const markupContainer = $("#markup-container");
+
+            // Create a new markup input
+            const newMarkupId = "inputmarkup" + (rowCounter_markup + 1);
+            const newMarkupInput = $("<input>", {
+                id: newMarkupId,
+                class: "form-control",
+                style: "width: 50px; margin: 1px;",
+                type: "text",
+                name: "markup[]"
+            });
+
+            // Append the new markup input to the markup container
+            markupContainer.append(newMarkupInput);
+
+            // Increment the markup row counter
+            rowCounter_markup++;
 });
 // multiple quantity --------------------------------
